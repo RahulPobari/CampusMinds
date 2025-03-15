@@ -1,6 +1,7 @@
-import { 
-    View, Text, SafeAreaView, StatusBar, StyleSheet, 
-    Image, TouchableOpacity, ScrollView 
+import {
+    View, Text, SafeAreaView, StatusBar, StyleSheet,
+    Image, TouchableOpacity, ScrollView,
+    ToastAndroid
 } from 'react-native';
 import React, { useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,6 +9,10 @@ import Colors from '@/data/Colors';
 import TextInputField from '@/components/Shared/TextInputField';
 import Button from '@/components/Shared/Button';
 import * as ImagePicker from 'expo-image-picker';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/configs/FirebaseConfig';
+import { upload } from 'cloudinary-react-native';
+import { cld, options } from '@/configs/CloudinaryConfig';
 
 export default function SignUp() {
     const [profileImage, setProfileImage] = useState<string | undefined>();
@@ -15,19 +20,44 @@ export default function SignUp() {
     const [email, setEmail] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
 
-    const onBtnPress = () => {
-        console.log("Full Name:", fullName);
-        console.log("Email:", email);
-        console.log("Password:", password);
+    const onBtnPress = async () => {
+        if (!email || !password || !fullName) {
+            ToastAndroid.show('Please enter all details', ToastAndroid.BOTTOM);
+            return;
+        }
+
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+            // console.log("User created successfully:", userCredentials.user);
+
+            
+            if (profileImage) {
+                const uploadResult = await upload(cld, {
+                    file: profileImage,
+                    options: options,
+                });
+
+                // console.log("Image uploaded successfully:", uploadResult);
+            } else {
+                console.log("No profile image selected.");
+            }
+
+            ToastAndroid.show("Account created successfully!", ToastAndroid.BOTTOM);
+        } catch (error: any) {
+            console.error("Error during signup:", error);
+            ToastAndroid.show(error.message, ToastAndroid.BOTTOM);
+        }
     };
 
     const pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images, 
+            mediaTypes: ImagePicker.MediaTypeOptions.All, 
             allowsEditing: true,
-            aspect: [1, 1],
+            aspect: [4, 4],
             quality: 1,
         });
+
+        console.log(result);
 
         if (!result.canceled) {
             setProfileImage(result.assets[0].uri);
@@ -44,9 +74,9 @@ export default function SignUp() {
                 {/* Profile Image Picker */}
                 <View style={styles.profileContainer}>
                     <TouchableOpacity onPress={pickImage} style={styles.imageWrapper}>
-                        <Image 
+                        <Image
                             source={profileImage ? { uri: profileImage } : require('./../../assets/images/profile.png')}
-                            style={styles.profileImage} 
+                            style={styles.profileImage}
                         />
                         <Ionicons name="camera" size={24} color={Colors.PRIMARY} style={styles.cameraIcon} />
                     </TouchableOpacity>
@@ -105,4 +135,3 @@ const styles = StyleSheet.create({
         padding: 2,
     },
 });
-
