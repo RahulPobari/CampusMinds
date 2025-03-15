@@ -8,8 +8,7 @@ export default function RootLayout() {
      
       <StatusBar style="dark" hidden={false} translucent={true} backgroundColor="transparent" />
 
-     
-      <SafeAreaView style={{ flex: 1 }}>
+    
         <Stack>
           <Stack.Screen
             name="landing"
@@ -18,7 +17,6 @@ export default function RootLayout() {
             }}
           />
         </Stack>
-      </SafeAreaView>
     </>
   );
 }
