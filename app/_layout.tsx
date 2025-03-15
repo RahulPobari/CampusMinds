@@ -16,7 +16,17 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="(auth)/SignUp"
+            options={{
+              headerTransparent: true,
+              headerTitle: "",
+              headerBackTitle: "",
+              // headerBackVisible: false,
+              }}
+              />
         </Stack>
+        
     </>
   );
 }
