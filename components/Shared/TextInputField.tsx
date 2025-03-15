@@ -3,7 +3,7 @@ import React from 'react';
 
 type TextInputFieldProps = {
     label: string;
-    onChangeText: any;
+    onChangeText: (text: string) => void;
     password ?: boolean
 };
 
