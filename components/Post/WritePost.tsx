@@ -22,7 +22,9 @@ export default function WritePost() {
         }
 
         //Upload Image
-        
+        if(selectedImage){
+            
+        }
 
     };
 
