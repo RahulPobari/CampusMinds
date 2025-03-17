@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
 import React, { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Button from '../Shared/Button';
@@ -8,13 +8,19 @@ export default function WritePost() {
     const [selectedImage, setSelectedImage] = useState<string | undefined>();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
+    const [content, setContent] = useState<string | null>();
     const [items, setItems] = useState([
         { label: 'Public', value: 'Public' },
         { label: 'Developer', value: 'Developer' },
     ]);
 
     const onPostBtn = () => {
-        // Post button functionality
+
+        if(!content){
+            ToastAndroid.show("Please add the content", ToastAndroid.BOTTOM);
+            return;
+        }
+
     };
 
     const pickImage = async () => {
@@ -38,6 +44,7 @@ export default function WritePost() {
                 multiline
                 numberOfLines={5}
                 maxLength={1000}
+                onChangeText={(value) => setContent(value)}
             />
             <DropDownPicker
                 items={items}
