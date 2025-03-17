@@ -17,9 +17,12 @@ export default function WritePost() {
     const onPostBtn = () => {
 
         if(!content){
-            ToastAndroid.show("Please add the content", ToastAndroid.BOTTOM);
+            ToastAndroid.show("Please enter content", ToastAndroid.BOTTOM);
             return;
         }
+
+        //Upload Image
+        
 
     };
 
