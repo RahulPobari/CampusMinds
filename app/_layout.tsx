@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface USER{
+interface USER {
   id: number,
   name: string,
   email: string,
@@ -13,15 +13,21 @@ interface USER{
 
 export default function RootLayout() {
 
-  const [user,setUser]=useState<USER | undefined>(undefined);
+  const [user, setUser] = useState<USER | undefined>(undefined);
   return (
     <>
-     
+
       <StatusBar style="dark" hidden={false} translucent={true} backgroundColor="transparent" />
 
-    <AuthContext.Provider value={{user , setUser}}>
+      <AuthContext.Provider value={{ user, setUser }}>
 
         <Stack>
+          <Stack.Screen
+            name="index"
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="landing"
             options={{
@@ -35,8 +41,8 @@ export default function RootLayout() {
               headerTitle: "",
               headerBackTitle: "",
               // headerBackVisible: false,
-              }}
-              />
+            }}
+          />
           <Stack.Screen
             name="(auth)/SignIn"
             options={{
@@ -44,11 +50,19 @@ export default function RootLayout() {
               headerTitle: "",
               headerBackTitle: "",
               // headerBackVisible: false,
-              }}
-              />
+            }}
+          />
+
+
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
         </Stack>
-        
-        </AuthContext.Provider>
+
+      </AuthContext.Provider>
     </>
   );
 }
