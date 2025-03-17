@@ -6,7 +6,7 @@ export async function POST(request: Request) {
 
     await client.connect();
     const result = await client.query(`
-        INSERT INTO USER VALUES(DEFAULT),'${name}','${email}','${image}')
+        INSERT INTO USERS VALUES(DEFAULT),'${name}','${email}','${image}')
         `)
 
     await client.end();
