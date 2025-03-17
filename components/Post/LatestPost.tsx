@@ -1,13 +1,22 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Colors from '@/data/Colors';
+import axios from 'axios';
 
 export default function LatestPost() {
 
     const [selectedTab, setSelectedTab] = useState(0);
+    const [posts,setPosts] = useState();
 
-    const GetPosts=()=>{
+    useEffect(()=>{
+        GetPosts();
+    })
+
+    const GetPosts=async()=>{
         //fetch data from DB
+        const result= await axios.get('http://192.168.205.77:8082/post?visibleIn=Public&orderField=post.id')
+        setPosts(result?.data);
+        // console.log(result.data);
     }
 
     return (
