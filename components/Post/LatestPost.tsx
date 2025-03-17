@@ -2,11 +2,13 @@ import { View, Text, Pressable, StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Colors from '@/data/Colors';
 import axios from 'axios';
+import PostList from './PostList';
 
 export default function LatestPost() {
 
     const [selectedTab, setSelectedTab] = useState(0);
     const [posts,setPosts] = useState();
+    const [loading,setLoading] = useState(false);
 
     useEffect(()=>{
         GetPosts();
@@ -14,8 +16,10 @@ export default function LatestPost() {
 
     const GetPosts=async()=>{
         //fetch data from DB
+        setLoading(true);
         const result= await axios.get('http://192.168.205.77:8082/post?visibleIn=Public&orderField=post.id')
         setPosts(result?.data);
+        setLoading(false);
         // console.log(result.data);
     }
 
@@ -38,7 +42,10 @@ export default function LatestPost() {
             </View>
 
 
-
+         <PostList posts={posts}
+         loading={loading}
+         onRefresh={GetPosts}
+         />
         </View>
     )
 }

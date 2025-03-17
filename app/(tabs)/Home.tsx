@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import React, { useContext } from 'react'
 import { AuthContext } from '@/context/AuthContext';
 import Header from '@/components/Home/Header';
@@ -7,6 +7,10 @@ import LatestPost from '@/components/Post/LatestPost';
 
 export default function Home() {
   return (
+    <FlatList 
+    data={[]}
+    renderItem={null}
+    ListHeaderComponent={
     <View style={{
       // padding: 10,
       paddingTop: 40,
@@ -17,7 +21,6 @@ export default function Home() {
       {/* Header */}
       <Header />
 
-
       {/* Category */}
       <Category />
 
@@ -25,5 +28,9 @@ export default function Home() {
      <LatestPost />
 
     </View>
+
+  } />
+
   )
+  
 }
