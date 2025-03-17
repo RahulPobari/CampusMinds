@@ -60,6 +60,12 @@ export default function RootLayout() {
               headerShown: false,
             }}
           />
+          <Stack.Screen
+            name="add-post/index"
+            options={{
+              headerTitle:"Add new Post",
+            }}
+          />
         </Stack>
 
       </AuthContext.Provider>
