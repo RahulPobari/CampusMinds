@@ -3,7 +3,7 @@ import {
     Image, TouchableOpacity, ScrollView,
     ToastAndroid
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '@/data/Colors';
 import TextInputField from '@/components/Shared/TextInputField';
@@ -13,12 +13,19 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/configs/FirebaseConfig';
 import { upload } from 'cloudinary-react-native';
 import { cld, options } from '@/configs/CloudinaryConfig';
+import axios from 'axios';
+import { useRouter } from 'expo-router';
+// import { AuthContext } from '@context/AuthContext';
+
 
 export default function SignUp() {
     const [profileImage, setProfileImage] = useState<string | undefined>();
     const [fullName, setFullName] = useState<string | undefined>();
     const [email, setEmail] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+    // const {user, setUser} = useContext(AuthContext);
 
     const onBtnPress = async () => {
         if (!email || !password || !fullName) {
@@ -35,6 +42,24 @@ export default function SignUp() {
                 const uploadResult = await upload(cld, {
                     file: profileImage,
                     options: options,
+                    callback: async (error: any, response: any)=>{
+                        if(error){
+                            console.log(error)
+                        }
+                        if(response){
+                            console.log(response?.url)
+                            const result = axios.post(process.env.EXPO_PUBLIC_HOST_URL+"/user",{
+                                name: fullName,
+                                email: email,
+                                image: response?.url
+                            });
+                            console.log(result);
+                            //Route to Home Screen
+                            router.push('/landing');
+
+
+                        }
+                    }
                 });
 
                 // console.log("Image uploaded successfully:", uploadResult);
