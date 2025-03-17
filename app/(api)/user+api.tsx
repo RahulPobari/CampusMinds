@@ -13,3 +13,8 @@ export async function POST(request: Request) {
 
     return Response.json(result);
 }
+
+
+export async function GET(request:Request) {
+    
+}

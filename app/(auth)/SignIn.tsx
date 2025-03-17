@@ -1,4 +1,4 @@
-import { View, Text, Image, Pressable, StyleSheet, ToastAndroid } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet, ToastAndroid, ActivityIndicator, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import TextInputField from '@/components/Shared/TextInputField';
 import Button from '@/components/Shared/Button';
@@ -11,22 +11,31 @@ export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState<string | undefined>('');
   const [password, setPassword] = useState<string | undefined>('');
+  const [loading, setLoading] = useState(false);
 
   const onSignInbtn = () => {
 
-    if(!email || !password){
+    if (!email || !password) {
       ToastAndroid.show('enter email and password', ToastAndroid.BOTTOM)
-      return ;
+      return;
     }
+    setLoading(true);
 
-    signInWithEmailAndPassword(auth,email,password)
-    .then(resp=>{
-      if(resp.user){
-        console.log(resp.user?.email)
-        //API call to fetch user data
-      }
+    signInWithEmailAndPassword(auth, email, password)
+      .then(resp => {
+        if (resp.user) {
+          console.log(resp.user?.email)
+          //API call to fetch user data
 
-    })
+
+        }
+        setLoading(false);
+
+      }).catch(e => {
+        setLoading(false);
+        ToastAndroid.show('Incorrect Email OR Password', ToastAndroid.BOTTOM)
+        console.log(e.message)
+      })
   };
 
   return (
@@ -45,7 +54,15 @@ export default function SignIn() {
       <TextInputField label="Password" password={true} onChangeText={(v) => setPassword(v)} />
 
       {/* Sign In Button */}
-      <Button text="Sign In" onPress={onSignInbtn} />
+      {/* <Button text="Sign In" onPress={onSignInbtn} /> */}
+
+      <TouchableOpacity
+        onPress={onSignInbtn}
+        style={[styles.button, loading && { backgroundColor: Colors.GRAY }]}
+        disabled={loading}
+      >
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Account</Text>}
+      </TouchableOpacity>
 
       {/* Sign Up Link */}
       <Pressable onPress={() => router.push('/(auth)/SignUp')}>
@@ -82,7 +99,12 @@ const styles = StyleSheet.create({
     marginBottom: 35,
   },
   button: {
-    marginTop: 15,
+    width: '100%',
+    backgroundColor: Colors.PRIMARY,
+    padding: 15,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
   },
   signUpText: {
     fontSize: 16,
@@ -93,5 +115,10 @@ const styles = StyleSheet.create({
   signUpLink: {
     fontWeight: 'bold',
     color: Colors.PRIMARY,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
