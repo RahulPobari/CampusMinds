@@ -1,30 +1,61 @@
 import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Button from '../Shared/Button';
 import * as ImagePicker from 'expo-image-picker';
+import { upload } from 'cloudinary-react-native';
+import { cld, options } from '@/configs/CloudinaryConfig';
+import axios from 'axios';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function WritePost() {
     const [selectedImage, setSelectedImage] = useState<string | undefined>();
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [content, setContent] = useState<string | null>();
+    const {user} = useContext(AuthContext);
+    const [loading,setLoading]= useState(false);
     const [items, setItems] = useState([
         { label: 'Public', value: 'Public' },
         { label: 'Developer', value: 'Developer' },
     ]);
 
-    const onPostBtn = () => {
+    const onPostBtn = async () => {
 
-        if(!content){
+        if (!content) {
             ToastAndroid.show("Please enter content", ToastAndroid.BOTTOM);
             return;
         }
+        setLoading(true);
 
         //Upload Image
-        if(selectedImage){
-            
+        let uploadImageUrl=''
+        if (selectedImage) {
+            const resultData:any = await new Promise(async (resolve, reject) => {
+                await upload(cld, {
+                    file: selectedImage,
+                    options: options,
+                    callback: (error: any, response: any) => {
+                        if (error) {
+                            reject(error)
+                        } else {
+                            resolve(response)
+                        }
+                    }
+                })
+            });
+            uploadImageUrl=resultData&&resultData?.url
         }
+        // console.log("Uploaded Image URL:", uploadImageUrl);
+
+        const result = await axios.post('http://192.168.205.77:8082/post',{
+            content:content,
+            imageUrl:uploadImageUrl,
+            visibleIn:value,
+            email:user?.email
+        });
+        console.log(result.data);
+        setLoading(false);
 
     };
 
@@ -71,7 +102,7 @@ export default function WritePost() {
                 <Image source={{ uri: selectedImage }} style={styles.fullImagePreview} />
             )}
 
-            <Button text='Post' onPress={onPostBtn} />
+            <Button text='Post' onPress={onPostBtn} loading={loading} />
         </View>
     );
 }
