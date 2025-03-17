@@ -1,5 +1,6 @@
 import { auth } from "@/configs/FirebaseConfig";
 import { AuthContext } from "@/context/AuthContext";
+import Colors from "@/data/Colors";
 import axios from "axios";
 import { Redirect, useRouter } from "expo-router";
 import { onAuthStateChanged } from "firebase/auth";
@@ -32,7 +33,7 @@ export default function Index() {
         backgroundColor: '#f8f9fa',
       }}
     >
-      <ActivityIndicator size={"large"}/>
+      <ActivityIndicator size={"large"} color={Colors.PRIMARY}/>
     </View>
   );
 }
