@@ -1,4 +1,4 @@
-import { View, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text } from 'react-native';
 import React, { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Button from '../Shared/Button';
@@ -39,15 +39,6 @@ export default function WritePost() {
                 numberOfLines={5}
                 maxLength={1000}
             />
-
-            <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
-                {selectedImage ? (
-                    <Image source={{ uri: selectedImage }} style={styles.image} />
-                ) : (
-                    <Image source={require('./../../assets/images/image.png')} style={styles.image} />
-                )}
-            </TouchableOpacity>
-
             <DropDownPicker
                 items={items}
                 open={open}
@@ -58,6 +49,15 @@ export default function WritePost() {
                 style={styles.dropdown}
                 dropDownContainerStyle={styles.dropdownContainer}
             />
+
+            <TouchableOpacity onPress={pickImage} style={styles.addImageButton}>
+                <Text style={styles.addImageText}>+ Add Image</Text>
+            </TouchableOpacity>
+
+
+            {selectedImage && (
+                <Image source={{ uri: selectedImage }} style={styles.fullImagePreview} />
+            )}
 
             <Button text='Post' onPress={onPostBtn} />
         </View>
@@ -79,16 +79,17 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ddd',
     },
-    imagePicker: {
-        // alignItems: 'center',
+    addImageButton: {
+        backgroundColor: '#007bff',
+        padding: 12,
+        borderRadius: 10,
+        alignItems: 'center',
         marginTop: 15,
     },
-    image: {
-        width: 100,
-        height: 100,
-        borderRadius: 15,
-        borderWidth: 0.5,
-        borderColor: '#ccc',
+    addImageText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     dropdown: {
         borderWidth: 0,
@@ -98,6 +99,14 @@ const styles = StyleSheet.create({
     dropdownContainer: {
         borderWidth: 0,
         elevation: 2,
+    },
+    fullImagePreview: {
+        width: '100%',
+        height: 300,
+        borderRadius: 15,
+        marginTop: 15,
+        borderWidth: 0.5,
+        borderColor: '#ccc',
     },
     postButton: {
         marginTop: 20,
