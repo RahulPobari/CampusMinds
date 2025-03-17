@@ -7,6 +7,7 @@ import { upload } from 'cloudinary-react-native';
 import { cld, options } from '@/configs/CloudinaryConfig';
 import axios from 'axios';
 import { AuthContext } from '@/context/AuthContext';
+import { useRouter } from 'expo-router';
 
 export default function WritePost() {
     const [selectedImage, setSelectedImage] = useState<string | undefined>();
@@ -19,6 +20,7 @@ export default function WritePost() {
         { label: 'Public', value: 'Public' },
         { label: 'Developer', value: 'Developer' },
     ]);
+    const router = useRouter();
 
     const onPostBtn = async () => {
 
@@ -56,7 +58,8 @@ export default function WritePost() {
         });
         console.log(result.data);
         setLoading(false);
-
+        ToastAndroid.show("Post Created Successfully", ToastAndroid.BOTTOM);
+        router.replace('/(tabs)/Home');
     };
 
     const pickImage = async () => {
