@@ -47,17 +47,18 @@ export default function SignUp() {
                             console.log(error) 
                         }
                         if(response){
-                            console.log(response?.url)
-                            const result = axios.post(process.env.EXPO_PUBLIC_HOST_URL+"/user",{
+                            console.log(response?.url);
+                            const result=await axios.post("http://192.168.205.77:8082/user",{
                                 name:fullName,
                                 email:email,
                                 image:response?.url
                             });
-                            console.log("result: ",result);
-                            //Route to Home Screen
-                            router.push('/landing');
+                            console.log("ressullt: ",result);
 
+                            //router to home screen
+                            router.push('/landing')
 
+                           
                         }
                     }
                 });
