@@ -11,5 +11,5 @@ export async function POST(request: Request) {
         `)
     await client.end();        
 
-    return Response.json({})
+    return Response.json(result)
 }
