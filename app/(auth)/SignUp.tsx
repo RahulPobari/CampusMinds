@@ -44,16 +44,16 @@ export default function SignUp() {
                     options: options,
                     callback: async (error: any, response: any)=>{
                         if(error){
-                            console.log(error)
+                            console.log(error) 
                         }
                         if(response){
                             console.log(response?.url)
                             const result = axios.post(process.env.EXPO_PUBLIC_HOST_URL+"/user",{
-                                name: fullName,
-                                email: email,
-                                image: response?.url
+                                name:fullName,
+                                email:email,
+                                image:response?.url
                             });
-                            console.log(result);
+                            console.log("result: ",result);
                             //Route to Home Screen
                             router.push('/landing');
 
