@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import Colors from '@/data/Colors';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/configs/FirebaseConfig';
+import axios from 'axios';
 
 export default function SignIn() {
   const router = useRouter();
@@ -22,11 +23,12 @@ export default function SignIn() {
     setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(resp => {
+      .then(async(resp) => {
         if (resp.user) {
-          console.log(resp.user?.email)
+          // console.log(resp.user?.email)
           //API call to fetch user data
-
+          const result = await axios.get("http://192.168.205.77:8082/user/?email="+resp.user?.email);
+          console.log(result.data);
 
         }
         setLoading(false);
@@ -34,7 +36,7 @@ export default function SignIn() {
       }).catch(e => {
         setLoading(false);
         ToastAndroid.show('Incorrect Email OR Password', ToastAndroid.BOTTOM)
-        console.log(e.message)
+        console.log("error: ",e.message)
       })
   };
 
