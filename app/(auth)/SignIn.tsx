@@ -1,5 +1,5 @@
 import { View, Text, Image, Pressable, StyleSheet, ToastAndroid, ActivityIndicator, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TextInputField from '@/components/Shared/TextInputField';
 import Button from '@/components/Shared/Button';
 import { useRouter } from 'expo-router';
@@ -7,12 +7,14 @@ import Colors from '@/data/Colors';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/configs/FirebaseConfig';
 import axios from 'axios';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function SignIn() {
   const router = useRouter();
   const [email, setEmail] = useState<string | undefined>('');
   const [password, setPassword] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
+  const {user,setUser}=useContext(AuthContext);
 
   const onSignInbtn = () => {
 
@@ -29,6 +31,7 @@ export default function SignIn() {
           //API call to fetch user data
           const result = await axios.get("http://192.168.205.77:8082/user/?email="+resp.user?.email);
           console.log(result.data);
+          setUser(result.data);
 
         }
         setLoading(false);

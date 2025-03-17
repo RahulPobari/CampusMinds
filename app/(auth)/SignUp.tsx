@@ -3,7 +3,7 @@ import {
     Image, TouchableOpacity, ScrollView, ActivityIndicator,
     ToastAndroid
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Colors from '@/data/Colors';
 import TextInputField from '@/components/Shared/TextInputField';
@@ -15,6 +15,7 @@ import { upload } from 'cloudinary-react-native';
 import { cld, options } from '@/configs/CloudinaryConfig';
 import axios from 'axios';
 import { useRouter } from 'expo-router';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function SignUp() {
     const [profileImage, setProfileImage] = useState<string | undefined>();
@@ -23,11 +24,12 @@ export default function SignUp() {
     const [password, setPassword] = useState<string | undefined>();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const {user,setUser}=useContext(AuthContext);
 
     const onBtnPress = async () => {
         setLoading(true);
 
-        if (!email || !password || !fullName) {
+        if (!email || !password || !fullName || !profileImage) {
             ToastAndroid.show('Please enter all details', ToastAndroid.BOTTOM);
             setLoading(false);
             return;
@@ -51,8 +53,14 @@ export default function SignUp() {
                             await axios.post("http://192.168.205.77:8082/user", {
                                 name: fullName,
                                 email: email,
-                                image: response?.url
+                                image: response?.url??''
                             });
+
+                            setUser({
+                                name: fullName,
+                                email: email,
+                                image: response?.url??''
+                            })
 
                             router.push('/landing');
                         }
