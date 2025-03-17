@@ -7,21 +7,21 @@ import Category from '@/components/Home/Category';
 export default function Home() {
   return (
     <View style={{
-      padding: 20,
+      // padding: 10,
       paddingTop: 40,
       backgroundColor: '#f8f9fa',
       flex: 1,
     }}>
       {/* Header */}
-      <Header/>
+      <Header />
 
 
       {/* Category */}
       <Category />
 
       {/* Latest Post */}
-        
-      
+
+
     </View>
   )
 }

@@ -1,33 +1,49 @@
-import { View, Text, Image } from 'react-native'
-import React, { useContext } from 'react'
-import Colors from '@/data/Colors'
-import { AuthContext } from '@/context/AuthContext'
+import { View, Text, Image, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import Colors from '@/data/Colors';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function Header() {
-
     const { user } = useContext(AuthContext);
+
     return (
-        <View style={{
-            flexDirection: 'row',
-            display: 'flex',
-            justifyContent: 'space-between',
-        }}>
+        <View style={styles.container}>
             <View>
-                <Text
-                    style={{
-                        fontSize: 25,
-                        color: Colors.PRIMARY,
-                        fontWeight: 'bold',
-                    }}
-                >Hello YOU!</Text>
-                <Text style={{ fontSize: 18, color: Colors.GRAY }}>CVM University</Text>
+                <Text style={styles.greeting}>Hello {user?.name || 'User'}!</Text>
+                <Text style={styles.subtitle}>CVM University</Text>
             </View>
 
-            <Image source={{uri: user?.image}} style={{
-                width: 45,
-                height: 45,
-                borderRadius: 99,
-            }} />
+            <Image
+                source={{ uri: user?.image || 'https://via.placeholder.com/45' }}
+                style={styles.profileImage}
+            />
         </View>
-    )
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingBottom: 10,
+    },
+    greeting: {
+        fontSize: 26,
+        fontWeight: 'bold',
+        color: Colors.PRIMARY,
+    },
+    subtitle: {
+        fontSize: 16,
+        color: Colors.GRAY,
+        marginTop: 2,
+    },
+    profileImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        borderWidth: 2,
+        borderColor: Colors.PRIMARY,
+    },
+});
