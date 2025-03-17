@@ -1,4 +1,4 @@
-const { Client } = require('node-postgres');
+import { Client } from 'node-postgres'
 
 
 export const client = new Client({
