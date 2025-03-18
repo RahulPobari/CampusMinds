@@ -1,10 +1,26 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar } from "react-native";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { AuthContext } from "@/context/AuthContext";  // Ensure you have the AuthContext setup
+import { AuthContext } from "@/context/AuthContext"; // Auth context for user state
+import { useRouter } from "expo-router"; // Expo router for navigation
+import { signOut } from "firebase/auth";
+import { auth } from "@/configs/FirebaseConfig";
+// import { auth } from "@/firebaseConfig"; // Ensure you have Firebase configured properly
 
 const Profile = () => {
-    const { user, logout } = useContext(AuthContext); // Get user details & logout function
+    const { user, setUser } = useContext(AuthContext); // Get user details & setUser function
+    const router = useRouter(); // Use router for navigation
+
+    // Logout function
+    const handleLogout = async () => {
+        try {
+            await signOut(auth); // Firebase sign out
+            setUser(null); // Clear user from AuthContext
+            router.replace("/landing"); // Navigate to landing page
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -12,13 +28,10 @@ const Profile = () => {
 
             {/* Profile Header */}
             <View style={styles.profileHeader}>
-                <Image source={{ uri: user?.image }} style={styles.profileImage} />
+                <Image source={{ uri: user?.image || "https://via.placeholder.com/100" }} style={styles.profileImage} />
                 <Text style={styles.userName}>{user?.name || "User Name"}</Text>
                 <Text style={styles.userEmail}>{user?.email || "user@example.com"}</Text>
             </View>
-
-            {/* Space between Image & Sections */}
-            <View style={{ height: 20 }} />
 
             {/* Sections */}
             <TouchableOpacity style={styles.section} onPress={() => console.log("Navigate to My Posts")}>
@@ -42,7 +55,7 @@ const Profile = () => {
             </TouchableOpacity>
 
             {/* Logout Button */}
-            <TouchableOpacity style={[styles.section, styles.logoutButton]} onPress={logout}>
+            <TouchableOpacity style={[styles.section, styles.logoutButton]} onPress={handleLogout}>
                 <MaterialIcons name="logout" size={24} color="#fff" />
                 <Text style={styles.logoutText}>Logout</Text>
             </TouchableOpacity>
@@ -55,7 +68,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#f8f9fa",
         paddingHorizontal: 20,
-        paddingTop: StatusBar.currentHeight || 20, // Fix for status bar overlap
+        paddingTop: StatusBar.currentHeight || 20,
     },
     profileHeader: {
         alignItems: "center",
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 50,
-        marginBottom: 15, // More space after the profile image
+        marginBottom: 15,
     },
     userName: {
         fontSize: 20,

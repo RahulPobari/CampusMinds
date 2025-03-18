@@ -12,13 +12,13 @@ export default function LatestPost() {
 
     useEffect(()=>{
         GetPosts();
-    })
+    },[]);
 
     const GetPosts=async()=>{
         //fetch data from DB
         setLoading(true);
         const result= await axios.get('http://192.168.205.77:8082/post?visibleIn=Public&orderField=post.id')
-        setPosts(result?.data);
+        setPosts(result?.data ||[]);
         setLoading(false);
         // console.log(result.data);
     }

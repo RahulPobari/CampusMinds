@@ -66,13 +66,13 @@ export default function SignIn() {
         style={[styles.button, loading && { backgroundColor: Colors.GRAY }]}
         disabled={loading}
       >
-        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Create Account</Text>}
+        {loading ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Login</Text>}
       </TouchableOpacity>
 
       {/* Sign Up Link */}
       <Pressable onPress={() => router.push('/(auth)/SignUp')}>
         <Text style={styles.signUpText}>
-          New to CampusMinds? <Text style={styles.signUpLink}>Create New Account</Text>
+          New to CampusMinds? <Text style={styles.signUpLink}>Create Account</Text>
         </Text>
       </Pressable>
     </View>
