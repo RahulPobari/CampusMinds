@@ -19,7 +19,7 @@ export default function Index() {
       setUser(result.data);
       router.replace('/(tabs)/Home');
     }
-    else{
+    else {
       router.replace('/landing');
     }
   })
@@ -33,7 +33,7 @@ export default function Index() {
         backgroundColor: '#f8f9fa',
       }}
     >
-      <ActivityIndicator size={"large"} color={Colors.PRIMARY}/>
+      <ActivityIndicator size={"large"} color={Colors.PRIMARY} />
     </View>
   );
 }
