@@ -46,12 +46,6 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 NILE_API_URL=your_nile_backend_url
 ```
 
-## 📸 Screenshots
-
-| Home Screen | Club Creation | Event Registration |
-|------------|--------------|-------------------|
-| ![Home](screenshots/home.png) | ![Club](screenshots/club.png) | ![Event](screenshots/event.png) |
-
 ## 🤝 Contributing
 
 We welcome contributions! To contribute:
