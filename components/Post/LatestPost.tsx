@@ -7,18 +7,18 @@ import PostList from './PostList';
 export default function LatestPost() {
 
     const [selectedTab, setSelectedTab] = useState(0);
-    const [posts,setPosts] = useState();
-    const [loading,setLoading] = useState(false);
+    const [posts, setPosts] = useState();
+    const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         GetPosts();
-    },[]);
+    }, []);
 
-    const GetPosts=async()=>{
+    const GetPosts = async () => {
         //fetch data from DB
         setLoading(true);
-        const result= await axios.get('http://192.168.205.77:8082/post?visibleIn=Public&orderField=post.id')
-        setPosts(result?.data ||[]);
+        const result = await axios.get('http://192.168.205.77:8082/post?visibleIn=Public&orderField=post.id')
+        setPosts(result?.data || []);
         setLoading(false);
         // console.log(result.data);
     }
@@ -27,14 +27,14 @@ export default function LatestPost() {
         <View style={{ marginTop: 15 }}>
 
             <View style={{ display: 'flex', flexDirection: 'row', gap: 8 }}>
-                <Pressable onPress={()=>setSelectedTab(0)}>
-                    <Text style={[style.tabtext, 
-                        { backgroundColor: selectedTab == 0 ? Colors.PRIMARY : Colors.WHITE },
-                        { color: selectedTab == 0 ? Colors.WHITE : Colors.PRIMARY }
-                        ]}>Latest</Text>
+                <Pressable onPress={() => setSelectedTab(0)}>
+                    <Text style={[style.tabtext,
+                    { backgroundColor: selectedTab == 0 ? Colors.PRIMARY : Colors.WHITE },
+                    { color: selectedTab == 0 ? Colors.WHITE : Colors.PRIMARY }
+                    ]}>Latest</Text>
                 </Pressable>
-                <Pressable onPress={()=>setSelectedTab(1)}>
-                    <Text style={[style.tabtext,{
+                <Pressable onPress={() => setSelectedTab(1)}>
+                    <Text style={[style.tabtext, {
                         backgroundColor: selectedTab == 1 ? Colors.PRIMARY : Colors.WHITE,
                         color: selectedTab == 1 ? Colors.WHITE : Colors.PRIMARY
                     }]}>Trending</Text>
@@ -42,10 +42,10 @@ export default function LatestPost() {
             </View>
 
 
-         <PostList posts={posts}
-         loading={loading}
-         onRefresh={GetPosts}
-         />
+            <PostList posts={posts}
+                loading={loading}
+                onRefresh={GetPosts}
+            />
         </View>
     )
 }
