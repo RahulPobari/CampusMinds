@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     await client.end();
 
     return Response.json(result);
-
 }
 
 export async function GET(request: Request) {
@@ -16,12 +15,11 @@ export async function GET(request: Request) {
     const orderField = new URL(request.url).searchParams.get('orderField');
 
     await client.connect();
-
+    
     const result = await client.query(`SELECT * from post
                                        INNER  JOIN users
                                        ON post.createdby=users.email
                                        WHERE visiblein='${visibleIn}' ORDER BY ${orderField} desc;`)
-
     await client.end();
 
     return Response.json(result.rows)
