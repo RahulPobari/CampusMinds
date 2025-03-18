@@ -14,7 +14,7 @@ export default function SignIn() {
   const [email, setEmail] = useState<string | undefined>('');
   const [password, setPassword] = useState<string | undefined>('');
   const [loading, setLoading] = useState(false);
-  const {user,setUser}=useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const onSignInbtn = () => {
 
@@ -25,11 +25,11 @@ export default function SignIn() {
     setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(async(resp) => {
+      .then(async (resp) => {
         if (resp.user) {
           // console.log(resp.user?.email)
           //API call to fetch user data
-          const result = await axios.get("http://192.168.205.77:8082/user/?email="+resp.user?.email);
+          const result = await axios.get("http://192.168.205.77:8082/user/?email=" + resp.user?.email);
           console.log(result.data);
           setUser(result.data);
 
@@ -39,7 +39,7 @@ export default function SignIn() {
       }).catch(e => {
         setLoading(false);
         ToastAndroid.show('Incorrect Email OR Password', ToastAndroid.BOTTOM)
-        console.log("error: ",e.message)
+        console.log("error: ", e.message)
       })
   };
 

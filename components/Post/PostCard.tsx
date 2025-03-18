@@ -4,32 +4,23 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-// Function to format the date properly
 const formatDate = (dateString: string) => {
-  if (!dateString) return "Just now"; // Fallback for missing date
+  if (!dateString) return "Just now";
   const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "Invalid date"; // Handle incorrect date format
+  if (isNaN(date.getTime())) return "Invalid date";
   return date.toLocaleDateString("en-US", {
     weekday: "short",
     day: "2-digit",
     month: "short",
     year: "numeric",
-  }); // Example: "Fri, 15 Mar 2024"
+  });
 };
 
 export default function PostCard({ post }: { post?: any }) {
-  // Mock Data if no post is passed
-  const defaultPost = {
-    name: "John Doe",
-    createdon: "2024-03-15T10:30:00Z", // ISO format date
-    image: "https://via.placeholder.com/50",
-    imageurl: "https://via.placeholder.com/300",
-    content: "This is a sample post content to preview the UI.",
-    likes: 120,
-    comments: 45,
-  };
 
-  const postData = post || defaultPost; // Use provided post or default
+
+
+  const postData = post;
 
   return (
     <View style={styles.cardContainer}>
