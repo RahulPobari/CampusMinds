@@ -1,22 +1,19 @@
 import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar } from "react-native";
 import { Ionicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
-import { AuthContext } from "@/context/AuthContext"; // Auth context for user state
-import { useRouter } from "expo-router"; // Expo router for navigation
+import { AuthContext } from "@/context/AuthContext";
+import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { auth } from "@/configs/FirebaseConfig";
-// import { auth } from "@/firebaseConfig"; // Ensure you have Firebase configured properly
-
 const Profile = () => {
-    const { user, setUser } = useContext(AuthContext); // Get user details & setUser function
-    const router = useRouter(); // Use router for navigation
+    const { user, setUser } = useContext(AuthContext);
+    const router = useRouter();
 
-    // Logout function
     const handleLogout = async () => {
         try {
-            await signOut(auth); // Firebase sign out
-            setUser(null); // Clear user from AuthContext
-            router.replace("/landing"); // Navigate to landing page
+            await signOut(auth);
+            setUser(null);
+            router.replace("/landing");
         } catch (error) {
             console.error("Logout failed:", error);
         }

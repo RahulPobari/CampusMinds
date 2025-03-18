@@ -24,7 +24,7 @@ export default function UserAvatar({ name, image, date }: USER_AVATAR) {
   );
 }
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
