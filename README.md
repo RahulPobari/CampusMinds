@@ -1,50 +1,66 @@
-# Welcome to your Expo app 👋
+# 📚 CampusMinds
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+CampusMinds is a platform designed for college students to collaborate on projects, share posts, stay updated with the latest news, create clubs based on shared interests, and register for upcoming events. 🚀
 
-## Get started
+## 🌟 Features
 
-1. Install dependencies
+- 🔗 **Project Collaboration** – Connect with peers and work on exciting projects together.
+- 📝 **Post Sharing** – Share updates, insights, and project progress with the community.
+- 📰 **Latest News** – Stay informed about campus happenings and announcements.
+- 🎭 **Club Creation & Joining** – Create clubs based on interests and invite like-minded students.
+- 📅 **Event Registration** – Browse and register for upcoming college events.
 
-   ```bash
-   npm install
-   ```
+## 🛠️ Tech Stack
 
-2. Start the app
+- ⚛️ **React Native** – Cross-platform mobile development.
+- ☁️ **Cloudinary** – Media storage and optimization.
+- 🔥 **Firebase** – Authentication, database, and cloud functions.
+- 🏗️ **Nile** – Backend services for scalable performance.
 
-   ```bash
-    npx expo start
-   ```
+## 🚀 Installation & Setup
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Follow these steps to set up and run the project locally:
 
 ```bash
-npm run reset-project
+# Clone the repository
+git clone https://github.com/yourusername/CampusMinds.git
+
+# Navigate to the project directory
+cd CampusMinds
+
+# Install dependencies
+npm install
+
+# Start the development server
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🔑 Environment Variables
 
-## Learn more
+Create a `.env` file in the root directory and add the required environment variables:
 
-To learn more about developing your project with Expo, look at the following resources:
+```plaintext
+FIREBASE_API_KEY=your_api_key
+FIREBASE_AUTH_DOMAIN=your_auth_domain
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+NILE_API_URL=your_nile_backend_url
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🤝 Contributing
 
-## Join the community
+We welcome contributions! To contribute:
+1. Fork the repository 🍴
+2. Create a new branch (`git checkout -b feature-branch`) 🌿
+3. Commit your changes (`git commit -m "Added new feature"`) 💡
+4. Push to the branch (`git push origin feature-branch`) 🚀
+5. Open a Pull Request 📩
 
-Join our community of developers creating universal apps.
+## 📜 License
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📬 Contact
+
+For any queries or suggestions, feel free to reach out:
+- 📧 Email: pobarirahul134@gmail.com
+- 🌐 LinkedIn: [Rahul Pobari](https://linkedin.com/in/rahul-pobari-388a151ba)
