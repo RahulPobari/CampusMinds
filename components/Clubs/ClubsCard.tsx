@@ -1,5 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import { AuthContext } from '@/context/AuthContext'
+import axios from 'axios'
 
 type CLUB = {
     id: number,
@@ -11,8 +13,16 @@ type CLUB = {
 
 export default function ClubsCard(club: CLUB) {
 
-    const onFollowBtn = () => {
-        console.log(`Follow button clicked for ${club.name}`);
+    const { user } = useContext(AuthContext);
+    const [loading,setLoading] = useState(false);
+
+    const onFollowBtn = async () => {
+        const result = await axios.post('http://192.168.205.77:8082/clubfollower', {
+            u_email: user?.email,
+            clubId: club?.id
+        });
+
+        console.log(result.data);
     };
 
     return (
