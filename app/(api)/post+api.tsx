@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     const orderField = new URL(request.url).searchParams.get('orderField');
 
     await client.connect();
-    
+
     const result = await client.query(`SELECT * from post
                                        INNER  JOIN users
                                        ON post.createdby=users.email
