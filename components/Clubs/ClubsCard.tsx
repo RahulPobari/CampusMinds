@@ -17,12 +17,14 @@ export default function ClubsCard(club: CLUB) {
     const [loading,setLoading] = useState(false);
 
     const onFollowBtn = async () => {
+        setLoading(true);
         const result = await axios.post('http://192.168.205.77:8082/clubfollower', {
             u_email: user?.email,
             clubId: club?.id
         });
 
         console.log(result.data);
+        setLoading(false);
     };
 
     return (
