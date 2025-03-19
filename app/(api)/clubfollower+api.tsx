@@ -1,8 +1,8 @@
 import { client } from "@/configs/NilePostgresConfig";
 
-export async function POST(request:Request) {
+export async function POST(request: Request) {
 
-    const {clubId,u_email} = await request.json();
+    const { clubId, u_email } = await request.json();
 
     await client.connect();
 
@@ -14,8 +14,7 @@ export async function POST(request:Request) {
     return Response.json(result);
 }
 
-
-export async function GET(request:Request) {
+export async function GET(request: Request) {
     const u_email = new URL(request.url).searchParams.get('u_email');
 
     await client.connect();
@@ -25,10 +24,9 @@ export async function GET(request:Request) {
     await client.end();
 
     return Response.json(result.rows);
-
 }
 
-export async function DELETE(request:Request) {
+export async function DELETE(request: Request) {
     const u_email = new URL(request.url).searchParams.get('u_email');
     const club_id = new URL(request.url).searchParams.get('club_id');
 
@@ -39,5 +37,4 @@ export async function DELETE(request:Request) {
     await client.end();
 
     return Response.json(result.rows);
-
 }
