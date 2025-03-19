@@ -1,7 +1,6 @@
 import { client } from "@/configs/NilePostgresConfig";
 
 export async function POST(request: Request) {
-
     const { clubId, u_email } = await request.json();
 
     await client.connect();

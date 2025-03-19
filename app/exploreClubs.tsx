@@ -16,11 +16,8 @@ export type CLUB = {
 export default function exploreClubs() {
 
     const [clubList, setClubList] = useState<CLUB[]>([]);
-
     const { user } = useContext(AuthContext);
-
     const [followedClub, setFollowedClub] = useState<any>([]);
-
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
@@ -43,7 +40,6 @@ export default function exploreClubs() {
         const result = await axios.get('http://192.168.205.77:8082/clubfollower?u_email=' + user?.email);
         // console.log(result.data);
         setFollowedClub(result.data);
-
     }
 
     const onAddClubBtn = () => {

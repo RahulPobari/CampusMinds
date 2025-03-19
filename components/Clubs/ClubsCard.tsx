@@ -32,7 +32,6 @@ export default function ClubsCard(club: CLUB) {
         }
 
         club.refreshData()
-
         setLoading(false);
     };
 
