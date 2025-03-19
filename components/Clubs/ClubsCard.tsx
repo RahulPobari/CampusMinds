@@ -8,7 +8,8 @@ type CLUB = {
     name: string,
     club_logo: string,
     about: string,
-    createdon: string
+    createdon: string,
+    isFollowed:boolean
 }
 
 export default function ClubsCard(club: CLUB) {
@@ -34,7 +35,9 @@ export default function ClubsCard(club: CLUB) {
             <Text numberOfLines={2} style={styles.clubAbout}>{club.about}</Text>
 
             <TouchableOpacity style={styles.followButton} onPress={onFollowBtn}>
-                <Text style={styles.followButtonText}>Follow</Text>
+                <Text style={styles.followButtonText}>
+                    {club.isFollowed ? 'Unfollow' : 'Follow'}
+                </Text>
             </TouchableOpacity>
         </View>
     )

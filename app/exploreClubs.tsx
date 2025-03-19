@@ -1,19 +1,25 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import ClubsCard from '@/components/Clubs/ClubsCard'
+import { AuthContext } from '@/context/AuthContext'
 
 export type CLUB = {
     id: number,
     name: string,
     club_logo: string,
     about: string,
-    createdon: string
+    createdon: string,
+    isFollowed: boolean
 }
 
 export default function exploreClubs() {
 
     const [clubList, setClubList] = useState<CLUB[]>([]);
+
+    const { user } = useContext(AuthContext);
+
+    const [followedClub, setFollowedClub] = useState<any>([]);
 
     useEffect(() => {
         GetAllClubs();
@@ -23,14 +29,27 @@ export default function exploreClubs() {
         try {
             const result = await axios.get('http://192.168.205.77:8082/clubs');
             setClubList(result.data);
+            GetUserFollowedClubs();
         } catch (error) {
             console.error('Error fetching clubs:', error);
         }
     };
 
+    const GetUserFollowedClubs = async () => {
+        const result = await axios.get('http://192.168.205.77:8082/clubfollower?u_email=' + user?.email);
+        // console.log(result.data);
+        setFollowedClub(result.data);
+
+    }
+
     const onAddClubBtn = () => {
         console.log("Add Club button pressed");
     };
+
+    const isFollowed = (clubId: number) => {
+        const record = followedClub.find((item: any) => item.club_id == clubId);
+        return record ? true : false;
+    }
 
     return (
         <View style={styles.container}>
@@ -46,7 +65,7 @@ export default function exploreClubs() {
                 numColumns={2}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <ClubsCard {...item} />
+                    <ClubsCard {...item} isFollowed={isFollowed(item.id)} />
                 )}
             />
         </View>
