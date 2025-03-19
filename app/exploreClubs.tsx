@@ -1,10 +1,93 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import ClubsCard from '@/components/Clubs/ClubsCard'
+
+export type CLUB = {
+    id: number,
+    name: string,
+    club_logo: string,
+    about: string,
+    createdon: string
+}
 
 export default function exploreClubs() {
-  return (
-    <View>
-      <Text>exploreClubs</Text>
-    </View>
-  )
+
+    const [clubList, setClubList] = useState<CLUB[]>([]);
+
+    useEffect(() => {
+        GetAllClubs();
+    }, []);
+
+    const GetAllClubs = async () => {
+        try {
+            const result = await axios.get('http://192.168.205.77:8082/clubs');
+            setClubList(result.data);
+        } catch (error) {
+            console.error('Error fetching clubs:', error);
+        }
+    };
+
+    const onAddClubBtn = () => {
+        console.log("Add Club button pressed");
+    };
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.addClubContainer}>
+                <Text style={styles.addClubText}>Create New Teams / Clubs</Text>
+                <TouchableOpacity style={styles.addButton} onPress={onAddClubBtn}>
+                    <Text style={styles.addButtonText}>+ Add</Text>
+                </TouchableOpacity>
+            </View>
+
+            <FlatList
+                data={clubList}
+                numColumns={2}
+                keyExtractor={(item) => item.id.toString()}
+                renderItem={({ item }) => (
+                    <ClubsCard {...item} />
+                )}
+            />
+        </View>
+    )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#f8f9fa',
+        paddingHorizontal: 10,
+        paddingTop: 10,
+    },
+    addClubContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#ffffff',
+        padding: 15,
+        marginBottom: 10,
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+        elevation: 3,
+    },
+    addClubText: {
+        fontSize: 17,
+        fontWeight: '500',
+        color: '#6c757d',
+    },
+    addButton: {
+        backgroundColor: '#007bff',
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+    },
+    addButtonText: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+});
