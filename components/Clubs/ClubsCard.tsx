@@ -31,8 +31,6 @@ export default function ClubsCard(club: CLUB) {
             });
         }
 
-        // console.log(result.data);
-
         club.refreshData()
 
         setLoading(false);
