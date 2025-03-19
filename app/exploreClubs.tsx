@@ -47,7 +47,7 @@ export default function exploreClubs() {
     };
 
     const isFollowed = (clubId: number) => {
-        const record = followedClub.find((item: any) => item.club_id == clubId);
+        const record = followedClub && followedClub?.find((item: any) => item.club_id == clubId);
         return record ? true : false;
     }
 
@@ -65,7 +65,9 @@ export default function exploreClubs() {
                 numColumns={2}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <ClubsCard {...item} isFollowed={isFollowed(item.id)} />
+                    <ClubsCard {...item} isFollowed={isFollowed(item.id)} 
+                    refreshData={GetAllClubs}
+                    />
                 )}
             />
         </View>

@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { AuthContext } from '@/context/AuthContext'
 import axios from 'axios'
@@ -9,22 +9,32 @@ type CLUB = {
     club_logo: string,
     about: string,
     createdon: string,
-    isFollowed:boolean
+    isFollowed: boolean,
+    refreshData: () => void
 }
 
 export default function ClubsCard(club: CLUB) {
 
     const { user } = useContext(AuthContext);
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const onFollowBtn = async () => {
         setLoading(true);
-        const result = await axios.post('http://192.168.205.77:8082/clubfollower', {
-            u_email: user?.email,
-            clubId: club?.id
-        });
+        if (club.isFollowed) {
+            const result = await axios.delete('http://192.168.205.77:8082/clubfollower?u_email=' + user.email + '&club_id=' + club.id);
+        }
 
-        console.log(result.data);
+        else {
+            const result = await axios.post('http://192.168.205.77:8082/clubfollower', {
+                u_email: user?.email,
+                clubId: club?.id
+            });
+        }
+
+        // console.log(result.data);
+
+        club.refreshData()
+
         setLoading(false);
     };
 
@@ -34,10 +44,22 @@ export default function ClubsCard(club: CLUB) {
             <Text style={styles.clubName}>{club.name}</Text>
             <Text numberOfLines={2} style={styles.clubAbout}>{club.about}</Text>
 
-            <TouchableOpacity style={styles.followButton} onPress={onFollowBtn}>
-                <Text style={styles.followButtonText}>
-                    {club.isFollowed ? 'Unfollow' : 'Follow'}
-                </Text>
+            <TouchableOpacity
+                style={[
+                    styles.followButton,
+                    loading ? styles.followButtonLoading :
+                        club.isFollowed ? styles.followButtonUnfollow : styles.followButtonFollow
+                ]}
+                onPress={onFollowBtn}
+                disabled={loading}
+            >
+                {loading ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                ) : (
+                    <Text style={styles.followButtonText}>
+                        {club.isFollowed ? 'Unfollow' : 'Follow'}
+                    </Text>
+                )}
             </TouchableOpacity>
         </View>
     )
@@ -75,14 +97,24 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     followButton: {
-        backgroundColor: '#28a745',
-        paddingVertical: 8,
-        paddingHorizontal: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     followButtonText: {
         color: '#ffffff',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    followButtonLoading: {
+        backgroundColor: '#6c757d', // Gray when loading
+    },
+    followButtonFollow: {
+        backgroundColor: '#28a745', // Green for Follow
+    },
+    followButtonUnfollow: {
+        backgroundColor: '#dc3545', // Red for Unfollow
     },
 });
