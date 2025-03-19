@@ -1,7 +1,9 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, StatusBar } from "react-native";
 
 const Club = () => {
+    const router = useRouter();
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
@@ -13,7 +15,7 @@ const Club = () => {
                 You haven't joined any club yet. Explore and become part of amazing communities!
             </Text>
 
-            <TouchableOpacity style={styles.joinButton} onPress={() => console.log("Navigate to Join Club")}>
+            <TouchableOpacity style={styles.joinButton} onPress={() => router.push('/exploreClubs')}>
                 <Text style={styles.joinButtonText}>Join a Club</Text>
             </TouchableOpacity>
         </View>

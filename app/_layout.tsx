@@ -45,6 +45,9 @@ export default function RootLayout() {
           {/* Main App Screens */}
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="add-post/index" options={{ headerTitle: "Add New Post" }} />
+
+
+          <Stack.Screen name="exploreClubs" options={{ headerTitle: "Explore Clubs" }} />
         </Stack>
       </AuthContext.Provider>
     </>
