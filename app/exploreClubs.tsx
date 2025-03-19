@@ -21,7 +21,7 @@ export default function exploreClubs() {
 
     const [followedClub, setFollowedClub] = useState<any>([]);
 
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         GetAllClubs();
@@ -71,8 +71,8 @@ export default function exploreClubs() {
                 refreshing={loading}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <ClubsCard {...item} isFollowed={isFollowed(item.id)} 
-                    refreshData={GetAllClubs}
+                    <ClubsCard {...item} isFollowed={isFollowed(item.id)}
+                        refreshData={GetAllClubs}
                     />
                 )}
             />
