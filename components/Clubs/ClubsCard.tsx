@@ -109,12 +109,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     followButtonLoading: {
-        backgroundColor: '#6c757d', // Gray when loading
+        backgroundColor: '#6c757d',
     },
     followButtonFollow: {
-        backgroundColor: '#28a745', // Green for Follow
+        backgroundColor: '#28a745',
     },
     followButtonUnfollow: {
-        backgroundColor: '#dc3545', // Red for Unfollow
+        backgroundColor: '#dc3545',
     },
 });

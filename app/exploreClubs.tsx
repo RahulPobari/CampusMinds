@@ -21,11 +21,14 @@ export default function exploreClubs() {
 
     const [followedClub, setFollowedClub] = useState<any>([]);
 
+    const [loading,setLoading] = useState(false);
+
     useEffect(() => {
         GetAllClubs();
     }, []);
 
     const GetAllClubs = async () => {
+        setLoading(true);
         try {
             const result = await axios.get('http://192.168.205.77:8082/clubs');
             setClubList(result.data);
@@ -33,6 +36,7 @@ export default function exploreClubs() {
         } catch (error) {
             console.error('Error fetching clubs:', error);
         }
+        setLoading(false);
     };
 
     const GetUserFollowedClubs = async () => {
@@ -63,6 +67,8 @@ export default function exploreClubs() {
             <FlatList
                 data={clubList}
                 numColumns={2}
+                onRefresh={GetAllClubs}
+                refreshing={loading}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
                     <ClubsCard {...item} isFollowed={isFollowed(item.id)} 
