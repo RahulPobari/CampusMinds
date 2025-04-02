@@ -41,7 +41,6 @@ export default function LatestPost() {
                 </Pressable>
             </View>
 
-
             <PostList posts={posts}
                 loading={loading}
                 onRefresh={GetPosts}
