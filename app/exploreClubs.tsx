@@ -38,7 +38,6 @@ export default function exploreClubs() {
 
     const GetUserFollowedClubs = async () => {
         const result = await axios.get('http://192.168.205.77:8082/clubfollower?u_email=' + user?.email);
-        // console.log(result.data);
         setFollowedClub(result.data);
     }
 
