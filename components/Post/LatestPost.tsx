@@ -15,7 +15,6 @@ export default function LatestPost() {
     }, []);
 
     const GetPosts = async () => {
-        //fetch data from DB
         setLoading(true);
         const result = await axios.get('http://192.168.205.77:8082/post?club=0&orderField=post.id')
         setPosts(result?.data || []);
