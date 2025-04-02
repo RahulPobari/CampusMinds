@@ -1,5 +1,5 @@
 import { View, TextInput, StyleSheet, Image, TouchableOpacity, Text, ToastAndroid } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Button from '../Shared/Button';
 import * as ImagePicker from 'expo-image-picker';
@@ -17,10 +17,14 @@ export default function WritePost() {
     const {user} = useContext(AuthContext);
     const [loading,setLoading]= useState(false);
     const [items, setItems] = useState([
-        { label: 'Public', value: 'Public' },
-        { label: 'Developer', value: 'Developer' },
+        { label: 'Public', value: 0 },
     ]);
     const router = useRouter();
+
+
+    useEffect(() => {
+        user && GetUserFollowedClubs()
+    }, [user])
 
     const onPostBtn = async () => {
 
@@ -74,6 +78,18 @@ export default function WritePost() {
             setSelectedImage(result.assets[0].uri);
         }
     };
+
+     const GetUserFollowedClubs = async () => {
+            const result = await axios.get('http://192.168.205.77:8082/clubfollower?u_email=' + user?.email);
+            console.log(result.data);
+           const data = result.data?.map((item:any)=>({
+            label:item?.name,
+            value:item.club_id
+           }));
+        //    console.log(data)
+           setItems(prev=>[...prev,...data])
+        }
+    
 
     return (
         <View style={styles.postContainer}>

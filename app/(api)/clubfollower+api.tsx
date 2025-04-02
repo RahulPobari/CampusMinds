@@ -18,7 +18,10 @@ export async function GET(request: Request) {
 
     await client.connect();
 
-    const result = await client.query(`select * from clubfollowers where u_email='${u_email}'`);
+    const result = await client.query(`SELECT clubs.name, clubfollowers.*
+FROM clubs
+INNER JOIN clubfollowers ON clubs.id = clubfollowers.club_id
+WHERE clubfollowers.u_email = '${u_email}'`);
 
     await client.end();
 
