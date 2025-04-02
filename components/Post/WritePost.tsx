@@ -21,7 +21,6 @@ export default function WritePost() {
     ]);
     const router = useRouter();
 
-
     useEffect(() => {
         user && GetUserFollowedClubs()
     }, [user])
