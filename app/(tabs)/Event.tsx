@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, FlatList, StatusBar } from "react-native";
 
+
 const eventsData = [
     { id: "1", name: "GCET PREMIER LEAGUE 2025", description: "We are thrilled to welcome you to the most awaited and anticipated event of our college! This cricket tournament promises to deliver an electrifying sporting experience for all participants and spectators.", image: require("../../assets/images/event1.jpg") },
     { id: "2", name: "Missing Out Feels Worse Than Regretting!", description: "At IEEE GCET SB, you dont just join a club — you join a community where tech enthusiasts turn ideas into reality.Whether youre a coder, a creator, or just curious to explore", image: require("../../assets/images/event2.jpg") },
