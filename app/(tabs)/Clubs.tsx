@@ -36,6 +36,7 @@ const Club = () => {
                 </TouchableOpacity>
             </View>
 
+
             {loading ? (
                 <ActivityIndicator size="large" color="#007bff" style={styles.loader} />
             ) : followedClub.length === 0 ? (
