@@ -19,7 +19,6 @@ export default function LatestPost() {
         const result = await axios.get('http://192.168.205.77:8082/post?club=0&orderField=post.id')
         setPosts(result?.data || []);
         setLoading(false);
-        // console.log(result.data);
     }
 
     return (
